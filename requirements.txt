@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+sentence-transformers
+faiss-cpu
+numpy
+pypdf
+python-docx
+python-pptx
+ollama
