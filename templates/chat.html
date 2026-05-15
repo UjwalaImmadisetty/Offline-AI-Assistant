@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Offline AI Assistant</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Segoe UI;
+display:flex;
+height:100vh;
+}
+
+.sidebar{
+width:220px;
+background:#111827;
+color:white;
+padding:15px;
+}
+
+.sidebar button{
+width:100%;
+margin-top:10px;
+}
+
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+header{
+background:#1f2937;
+color:white;
+padding:15px;
+text-align:center;
+}
+
+.chat-box{
+flex:1;
+padding:15px;
+overflow-y:auto;
+background:#f4f6f9;
+}
+
+.message{
+padding:10px 15px;
+border-radius:10px;
+margin:8px 0;
+max-width:70%;
+}
+
+.user{
+background:#2563eb;
+color:white;
+margin-left:auto;
+}
+
+.ai{
+background:#e5e7eb;
+}
+
+.input-area{
+display:flex;
+padding:10px;
+background:white;
+}
+
+input{
+flex:1;
+padding:10px;
+}
+
+button{
+padding:10px;
+margin-left:5px;
+}
+
+.dark{
+background:#020617;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h3>Chats</h3>
+
+<button onclick="newChat()">New Chat</button>
+
+<button onclick="toggleDark()">Dark Mode</button>
+
+</div>
+
+<div class="main">
+
+<header>Offline AI Assistant</header>
+
+<div style="padding:10px">
+
+<input type="file" id="fileUpload">
+
+<button onclick="uploadFile()">Upload File</button>
+
+<select id="mode">
+<option value="ai">General AI</option>
+<option value="pdf">Document QA</option>
+</select>
+
+</div>
+
+<div class="chat-box" id="chatBox"></div>
+
+<div class="input-area">
+
+<input id="question" placeholder="Ask something...">
+
+<button onclick="voice()">🎤</button>
+
+<button onclick="ask()">Send</button>
+
+</div>
+
+</div>
+
+<script>
+
+const chatBox=document.getElementById("chatBox")
+
+function formatText(text){
+
+text=text.replace(/\n/g,"<br>")
+text=text.replace(/### (.*?)/g,"<h3>$1</h3>")
+text=text.replace(/## (.*?)/g,"<h2>$1</h2>")
+text=text.replace(/# (.*?)/g,"<h1>$1</h1>")
+text=text.replace(/- (.*?)/g,"• $1")
+
+return text
+}
+
+function addMessage(text,type){
+
+let div=document.createElement("div")
+
+div.classList.add("message",type)
+
+div.innerHTML=formatText(text)
+
+chatBox.appendChild(div)
+
+chatBox.scrollTop=chatBox.scrollHeight
+
+}
+
+function stream(text){
+
+let div=document.createElement("div")
+
+div.classList.add("message","ai")
+
+chatBox.appendChild(div)
+
+let i=0
+
+let interval=setInterval(()=>{
+
+div.innerHTML+=text.charAt(i)
+
+i++
+
+if(i>=text.length) clearInterval(interval)
+
+chatBox.scrollTop=chatBox.scrollHeight
+
+},15)
+
+}
+
+async function ask(){
+
+let q=document.getElementById("question").value
+
+if(!q) return
+
+addMessage(q,"user")
+
+document.getElementById("question").value=""
+
+let mode=document.getElementById("mode").value
+
+let endpoint=mode==="pdf"?"/ask_pdf":"/ask_ai"
+
+let res=await fetch(endpoint,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({query:q})
+})
+
+let data=await res.json()
+
+stream(data.answer)
+
+}
+
+async function uploadFile(){
+
+let file=document.getElementById("fileUpload").files[0]
+
+if(!file){
+alert("Select file first")
+return
+}
+
+let formData=new FormData()
+
+formData.append("file",file)
+
+await fetch("/upload_file",{method:"POST",body:formData})
+
+alert("File uploaded successfully")
+
+}
+
+function voice(){
+
+let rec=new webkitSpeechRecognition()
+
+rec.start()
+
+rec.onresult=e=>{
+document.getElementById("question").value=e.results[0][0].transcript
+}
+
+}
+
+document.getElementById("question").addEventListener("keypress",e=>{
+if(e.key==="Enter") ask()
+})
+
+function toggleDark(){
+document.body.classList.toggle("dark")
+}
+
+function newChat(){
+chatBox.innerHTML=""
+}
+
+</script>
+
+</body>
+</html>
