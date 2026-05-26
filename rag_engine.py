@@ -8,11 +8,19 @@ import docx
 from pptx import Presentation
 import ollama
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
-
+# Lazy load model to save memory on startup
+_model = None
 documents = []
 index = None
 memory = []
+
+
+def get_model():
+    """Lazy load the embedding model on first use"""
+    global _model
+    if _model is None:
+        _model = SentenceTransformer("all-MiniLM-L6-v2")
+    return _model
 
 
 def extract_text(file):
@@ -59,7 +67,7 @@ def create_vector_store(chunks):
 
     documents.extend(chunks)
 
-    embeddings = model.encode(chunks)
+    embeddings = get_model().encode(chunks)
 
     if index is None:
 
@@ -106,7 +114,7 @@ def ask_question(question):
     if index is None:
         return "No documents indexed yet."
 
-    query_embedding = model.encode([question])
+    query_embedding = get_model().encode([question])
 
     distances, indices = index.search(np.array(query_embedding), k=3)
 
