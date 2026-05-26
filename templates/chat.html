@@ -21,12 +21,13 @@ body {
 
 .sidebar {
   width: 280px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #1a1a1a;
+  color: #ececf1;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
+  border-right: 1px solid #404040;
 }
 
 .sidebar h3 {
@@ -39,9 +40,9 @@ body {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
-  background: rgba(255,255,255,0.2);
-  color: white;
-  border: 1px solid rgba(255,255,255,0.3);
+  background: #373737;
+  color: #ececf1;
+  border: 1px solid #565656;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
@@ -50,8 +51,8 @@ body {
 }
 
 .sidebar button:hover {
-  background: rgba(255,255,255,0.3);
-  transform: translateY(-2px);
+  background: #4a4a4a;
+  border-color: #707070;
 }
 
 .main {
@@ -61,11 +62,12 @@ body {
 }
 
 header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #2a2a2a;
+  color: #ececf1;
   padding: 20px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #404040;
 }
 
 header h1 {
@@ -107,7 +109,7 @@ header h1 {
 
 .controls button {
   padding: 10px 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #10a37f;
   color: white;
   border: none;
   border-radius: 6px;
@@ -117,8 +119,8 @@ header h1 {
 }
 
 .controls button:hover {
+  background: #0e8a6f;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .upload-status {
@@ -133,7 +135,7 @@ header h1 {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background: #f8f9fa;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -153,10 +155,10 @@ header h1 {
 }
 
 .message.user {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #10a37f;
   color: white;
   margin-left: auto;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(16, 163, 127, 0.2);
 }
 
 .message.ai {
@@ -197,7 +199,7 @@ header h1 {
 .input-area {
   display: flex;
   padding: 15px;
-  background: white;
+  background: #ffffff;
   gap: 10px;
   border-top: 1px solid #e0e0e0;
 }
@@ -219,7 +221,7 @@ header h1 {
 
 .input-area button {
   padding: 12px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #10a37f;
   color: white;
   border: none;
   border-radius: 8px;
@@ -229,8 +231,8 @@ header h1 {
 }
 
 .input-area button:hover {
+  background: #0e8a6f;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .input-area button:disabled {
@@ -255,17 +257,17 @@ header h1 {
 }
 
 .dark {
-  background: #1a1a1a;
-  color: #e0e0e0;
+  background: #0d0d0d;
+  color: #ececf1;
 }
 
-.dark body { background: #121212; }
-.dark .main { background: #121212; }
-.dark .controls { background: #1e1e1e; }
-.dark .chat-box { background: #121212; }
-.dark .message.ai { background: #1e1e1e; color: #e0e0e0; }
-.dark .input-area { background: #1e1e1e; }
-.dark .input-area input { background: #2a2a2a; color: #e0e0e0; border-color: #404040; }
+.dark body { background: #0d0d0d; }
+.dark .main { background: #0d0d0d; }
+.dark .controls { background: #1a1a1a; color: #ececf1; border-bottom: 1px solid #404040; }
+.dark .chat-box { background: #0d0d0d; }
+.dark .message.ai { background: #1a1a1a; color: #ececf1; }
+.dark .input-area { background: #1a1a1a; border-top: 1px solid #404040; }
+.dark .input-area input { background: #2a2a2a; color: #ececf1; border-color: #404040; }
 
 </style></head>
 
