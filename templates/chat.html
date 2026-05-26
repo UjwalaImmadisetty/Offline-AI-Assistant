@@ -388,7 +388,7 @@ async function ask() {
     }
   } catch (error) {
     loadingDiv.remove();
-    addMessage(`⚠️ Error: ${error.message}`, "ai error");
+    addMessage(`⚠️ Error: ${error.message}`, "ai");
     console.error(error);
   } finally {
     isLoading = false;
